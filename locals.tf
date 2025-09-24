@@ -2,9 +2,7 @@ data "aws_region" "current" {}
 data "aws_availability_zones" "available" { state = "available" }
 
 locals {
-  azs = length(var.azs) > 0
-    ? slice(var.azs, 0, var.az_count)
-    : slice(data.aws_availability_zones.available.names, 0, var.az_count)
+  azs = length(var.azs) > 0 ? slice(var.azs, 0, var.az_count) : slice(data.aws_availability_zones.available.names, 0, var.az_count)
 
   # Si no pasas CIDRs, se calculan sin solaparse:
   # públicos: netnum [0..az_count-1]
