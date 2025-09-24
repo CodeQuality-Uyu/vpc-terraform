@@ -29,7 +29,5 @@ resource "aws_route" "private_default_via_nat" {
 
   route_table_id         = each.value.id
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = var.single_nat_gateway
-    ? aws_nat_gateway.this[0].id
-    : aws_nat_gateway.per_az[tonumber(each.key)].id
+  nat_gateway_id         = var.single_nat_gateway ? aws_nat_gateway.this[0].id : aws_nat_gateway.per_az[tonumber(each.key)].id
 }
