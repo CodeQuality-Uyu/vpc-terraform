@@ -94,3 +94,22 @@ variable "interface_endpoints" {
     "secretsmanager"
   ]
 }
+
+variable "enable_bastion_ssm" {
+  description = "Crea el bastion SSM dentro de la VPC"
+  type        = bool
+  default     = true
+}
+
+variable "bastion_instance_type" {
+  description = "Tipo de instancia del bastion (t3.nano/t4g.nano)"
+  type        = string
+  default     = "t3.nano"
+}
+
+variable "bastion_subnet_id" {
+  description = "Subnet PRIVADA para el bastion; si se omite, usa la primera privada"
+  type        = string
+  default     = ""
+}
+
