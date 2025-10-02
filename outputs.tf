@@ -15,3 +15,13 @@ output "nat_gateway_ids" {
     var.enable_nat && !var.single_nat_gateway ? [for n in aws_nat_gateway.per_az : n.id] : []
   )
 }
+
+output "ssm_bastion_sg_id" {
+  value       = var.enable_bastion_ssm ? aws_security_group.bastion[0].id : null
+  description = "Security Group del bastion SSM (para permitir acceso a RDS)"
+}
+
+output "bastion_instance_id" {
+  value       = var.enable_bastion_ssm ? aws_instance.bastion[0].id : null
+  description = "Instance ID del bastion (para aws ssm start-session)"
+}
