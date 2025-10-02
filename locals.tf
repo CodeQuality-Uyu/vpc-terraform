@@ -20,4 +20,12 @@ locals {
 
   public_cidrs  = coalesce(var.public_subnet_cidrs,  local.public_cidrs_computed)
   private_cidrs = coalesce(var.private_subnet_cidrs, local.private_cidrs_computed)
+
+
+  # Toma la primera subnet privada si no se pasa una explícita
+  bastion_subnet_id = var.bastion_subnet_id != "" ? var.bastion_subnet_id : values(aws_subnet.private)[0].id
+
+  # Arquitectura: t4g.* => ARM; el resto x86_64
+  bastion_is_arm = can(regex("^t4g\\.", var.bastion_instance_type))
+  bastion_arch   = local.bastion_is_arm ? "arm64" : "x86_64"
 }
