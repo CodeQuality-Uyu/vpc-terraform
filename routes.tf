@@ -23,10 +23,18 @@ resource "aws_route_table" "private" {
   tags     = merge(var.tags, { Name = "${var.name}-private-rt-${each.value.availability_zone}" })
 }
 
-# Default route de privadas -> NAT
+# Default route de privadas -> NAT (si está habilitado)
 resource "aws_route" "private_default_via_nat" {
-  for_each               = { for rt in aws_route_table.private : rt.id => rt }
-  route_table_id         = each.key
+  for_each = var.enable_nat ? aws_route_table.private : {}
+
+  route_table_id         = each.value.id
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.this.id
+  nat_gateway_id         = var.single_nat_gateway ? aws_nat_gateway.this[0].id : aws_nat_gateway.per_az[tonumber(each.key)].id
+}
+
+# Asociar CADA subnet privada a su route table privada
+resource "aws_route_table_association" "private_assoc" {
+  for_each       = aws_subnet.private
+  subnet_id      = each.value.id
+  route_table_id = aws_route_table.private[each.key].id
 }
