@@ -113,3 +113,9 @@ variable "bastion_subnet_id" {
   default     = ""
 }
 
+variable "enable_db_clients_sg" {
+  description = "Crea SG compartido para workloads que consumen la DB"
+  type        = bool
+  default     = true
+}
+
