@@ -25,3 +25,8 @@ output "bastion_instance_id" {
   value       = var.enable_bastion_ssm ? aws_instance.bastion[0].id : null
   description = "Instance ID del bastion (para aws ssm start-session)"
 }
+
+output "db_clients_sg_id" {
+  value       = var.enable_db_clients_sg ? aws_security_group.db_clients[0].id : null
+  description = "SG compartido para clientes de la DB"
+}
