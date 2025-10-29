@@ -30,3 +30,8 @@ output "db_clients_sg_id" {
   value       = var.enable_db_clients_sg ? aws_security_group.db_clients[0].id : null
   description = "SG compartido para clientes de la DB"
 }
+
+output "availability_zones" {
+  value       = local.azs
+  description = "Lista de AZs efectivamente usadas"
+}
