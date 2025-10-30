@@ -1,4 +1,5 @@
 variable "aws_region"            { type = string }
+variable "aws_account_id"        { type = string }
 
 variable "name"            {
   description = "Nombre/prefijo para etiquetar recursos"
