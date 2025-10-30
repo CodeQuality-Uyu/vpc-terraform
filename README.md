@@ -72,9 +72,38 @@ para hospedar servicios ECS, RDS y ALB en subnets privadas y públicas.
   az_count           = 2
   ```
 - Para **prod o tenants dedicados**:
-```hcl
+  ```hcl
   enable_nat         = true
   single_nat_gateway = false
   enable_bastion_ssm = false
   az_count           = 3
+  ```
+- Usar Terraform Cloud con rol OIDC:
+  ```hcl
+  provider "aws" {
+    region = var.aws_region
+  }
+  ```
+
+---
+
+## 🏷️ Tags recomendados
+Ejemplo sugerido de `var.tags`:
+```hcl
+tags = {
+  Project     = "EColors"
+  Environment = "NonProd"
+  Owner       = "daniel.acevedo@ecolors.app"
+}
 ```
+
+---
+
+## 📦 Integración
+Los outputs de este módulo son consumidos por:
+- [`alb-terraform`](https://github.com/CodeQuality-Uyu/alb-terraform)
+- [`ecs-cluster-terraform`](https://github.com/CodeQuality-Uyu/ecs-cluster-terraform)
+- [`ecs-service-terraform`](https://github.com/CodeQuality-Uyu/ecs-service-terraform)
+- [`rds-shared-terraform`](https://github.com/CodeQuality-Uyu/rds-shared-terraform)
+
+---
