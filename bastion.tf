@@ -24,6 +24,8 @@ resource "aws_instance" "bastion" {
   associate_public_ip_address = false
   hibernation                 = false
 
+  depends_on = [aws_subnet.private]
+
   metadata_options {
     http_tokens                 = "required" # IMDSv2
     http_endpoint               = "enabled"
